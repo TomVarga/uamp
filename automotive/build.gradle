@@ -19,7 +19,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion rootProject.compileSdkVersion
     namespace 'com.example.android.uamp.automotive'
 
     defaultConfig {
@@ -27,6 +26,7 @@ android {
 
         minSdkVersion 21
         targetSdkVersion rootProject.targetSdkVersion
+        compileSdk rootProject.compileSdkVersion
 
         versionCode 1
         versionName "1.0"
@@ -39,11 +39,11 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        jvmTarget = '17'
     }
 
     buildTypes {
@@ -52,6 +52,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    namespace 'com.example.android.uamp.automotive'
 
 }
 
@@ -64,7 +65,8 @@ dependencies {
     implementation "androidx.car:car:$androidx_car_version"
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
     implementation "androidx.appcompat:appcompat:$androidx_app_compat_version"
-    implementation "androidx.lifecycle:lifecycle-extensions:$arch_lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$arch_lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$arch_lifecycle_version"
 
     implementation "com.google.android.gms:play-services-auth:$play_services_auth_version"
 

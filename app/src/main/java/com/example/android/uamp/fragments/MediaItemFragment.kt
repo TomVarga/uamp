@@ -65,10 +65,8 @@ class MediaItemFragment : Fragment() {
         return binding.root
     }
 
-    @Suppress("DEPRECATION")
-    @Deprecated("Deprecated in Java")
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         // Always true, but lets lint know that as well.
         mediaId = arguments?.getString(MEDIA_ID_ARG) ?: return
@@ -78,7 +76,7 @@ class MediaItemFragment : Fragment() {
                 if (list?.isNotEmpty() == true) View.GONE else View.VISIBLE
             listAdapter.submitList(list)
         }
-        mediaItemFragmentViewModel.networkError.observe(viewLifecycleOwner) { error: Boolean ->
+        mediaItemFragmentViewModel.networkError.observe(viewLifecycleOwner) { error ->
             if (error) {
                 binding.loadingSpinner.visibility = View.GONE
                 binding.networkError.visibility = View.VISIBLE

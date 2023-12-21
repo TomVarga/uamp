@@ -24,7 +24,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.switchMap
+import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import androidx.media3.common.C
 import androidx.media3.common.MediaItem
@@ -48,9 +48,9 @@ class MainActivityViewModel(
 
     private lateinit var lastBrowsableMediaId: String
 
-    val rootMediaItem: LiveData<MediaItem> =
-        musicServiceConnection.rootMediaItem.switchMap { rootMediaItem ->
-            return@switchMap if (rootMediaItem != MediaItem.EMPTY) MutableLiveData(rootMediaItem) else null
+    val rootMediaItem: LiveData<MediaItem?> =
+        musicServiceConnection.rootMediaItem.map { rootMediaItem ->
+            if (rootMediaItem != MediaItem.EMPTY) rootMediaItem else null
         }
 
     /**
@@ -123,13 +123,14 @@ class MainActivityViewModel(
         parentMediaId: String? = null
     ) {
         val nowPlaying = musicServiceConnection.nowPlaying.value
-        val player = musicServiceConnection.player?: return
+        val player = musicServiceConnection.player ?: return
 
         val isPrepared = player.playbackState != Player.STATE_IDLE
         if (isPrepared && mediaItem.mediaId == nowPlaying?.mediaId) {
             when {
                 player.isPlaying ->
                     if (pauseThenPlaying) player.pause() else Unit
+
                 player.isPlayEnabled -> player.play()
                 player.isEnded -> player.seekTo(C.TIME_UNSET)
                 else -> {
