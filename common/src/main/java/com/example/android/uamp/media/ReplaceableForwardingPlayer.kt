@@ -314,7 +314,6 @@ class ReplaceableForwardingPlayer(private var player: Player) : Player {
     override fun hasPrevious(): Boolean {
         return player.hasPreviousMediaItem()
     }
-    @Deprecated("Deprecated in Java")
 
     @Deprecated("Deprecated in Java")
     @OptIn(UnstableApi::class)
@@ -668,14 +667,6 @@ class ReplaceableForwardingPlayer(private var player: Player) : Player {
     @Deprecated("Deprecated in Java")
     override fun setDeviceMuted(muted: Boolean) {
         player.setDeviceMuted(muted, VOLUME_FLAG_PLAY_SOUND)
-    }
-
-    override fun setDeviceMuted(muted: Boolean, flags: Int) {
-        player.setDeviceMuted(muted, flags)
-    }
-
-    override fun setAudioAttributes(audioAttributes: AudioAttributes, handleAudioFocus: Boolean) {
-        player.setAudioAttributes(audioAttributes, handleAudioFocus)
     }
 
     override fun setDeviceMuted(muted: Boolean, flags: Int) {
